@@ -5551,8 +5551,8 @@ msgstr "не вдалося знайти типові версії розшир�
 
 #: elfxx-riscv.c:1769
 #, c-format
-msgid "%s: first ISA extension must be `e', `i' or `g'"
-msgstr "%s: першим розширенням ISA має бути «e», «i» або «g»"
+msgid "%s: first ISA extension must be `e', `i', `g' or `y'"
+msgstr "%s: першим розширенням ISA має бути «e», «i», «g» або «y»"
 
 #: elfxx-riscv.c:1793
 #, c-format

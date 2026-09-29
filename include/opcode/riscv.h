@@ -66,6 +66,11 @@ static inline unsigned int riscv_insn_length (insn_t insn)
   ((RV_X(x, 12, 20) << 12) | (RV_IMM_SIGN(x) << 32))
 #define EXTRACT_JTYPE_IMM(x) \
   ((RV_X(x, 21, 10) << 1) | (RV_X(x, 20, 1) << 11) | (RV_X(x, 12, 8) << 12) | (RV_IMM_SIGN(x) << 20))
+#define EXTRACT_YBNDSWI_UIMM(x) \
+  (RV_X(x, 20, 9) == 0 ? 4096 \
+   : RV_X(x, 28, 1) == 0 ? RV_X(x, 20, 8) \
+   : RV_X(x, 25, 3) == 0 ? 256 | (RV_X(x, 20, 4) << 4) | (RV_X(x, 24, 1) << 3) \
+   : RV_X(x, 20, 8) << 4)
 #define EXTRACT_CITYPE_IMM(x) \
   (RV_X(x, 2, 5) | (-RV_X(x, 12, 1) << 5))
 #define EXTRACT_CITYPE_LUI_IMM(x) \
@@ -246,6 +251,8 @@ static inline unsigned int riscv_insn_length (insn_t insn)
 #define OP_SH_SHAMT		20
 #define OP_MASK_SHAMTW		0x1f
 #define OP_SH_SHAMTW		20
+#define OP_MASK_SHAMTY		0x7f
+#define OP_SH_SHAMTY		20
 #define OP_MASK_RM		0x7
 #define OP_SH_RM		12
 #define OP_MASK_PRED		0xf
@@ -395,6 +402,7 @@ enum riscv_insn_class
   INSN_CLASS_NONE,
 
   INSN_CLASS_I,
+  INSN_CLASS_Y,
   INSN_CLASS_C,
   INSN_CLASS_A,
   INSN_CLASS_M,
@@ -409,6 +417,7 @@ enum riscv_insn_class
   INSN_CLASS_ZIHINTNTL,
   INSN_CLASS_ZIHINTNTL_AND_C,
   INSN_CLASS_ZIHINTPAUSE,
+  INSN_CLASS_ZYHYBRID,
   INSN_CLASS_ZMMUL,
   INSN_CLASS_ZAWRS,
   INSN_CLASS_F_INX,

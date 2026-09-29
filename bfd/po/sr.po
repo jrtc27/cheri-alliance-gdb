@@ -5547,8 +5547,8 @@ msgstr "не могу да нађем основна издања за ISA пр�
 
 #: elfxx-riscv.c:1769
 #, c-format
-msgid "%s: first ISA extension must be `e', `i' or `g'"
-msgstr "%s: прво ISA проширење мора бити „e“, „i“ или „g“"
+msgid "%s: first ISA extension must be `e', `i', `g' or `y'"
+msgstr "%s: прво ISA проширење мора бити „e“, „i“, „g“ или „y“"
 
 #: elfxx-riscv.c:1793
 #, c-format

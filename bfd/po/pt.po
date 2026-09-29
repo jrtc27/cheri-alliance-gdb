@@ -5412,8 +5412,8 @@ msgstr "-march=%s: rv%de não é uma base ISA válida"
 
 #: elfxx-riscv.c:1573
 #, c-format
-msgid "-march=%s: first ISA extension must be `e', `i' or `g'"
-msgstr "-march=%s: primeira extensão ISA tem de ser \"e\", \"i\" ou \"g\""
+msgid "-march=%s: first ISA extension must be `e', `i', `g' or `y'"
+msgstr "-march=%s: primeira extensão ISA tem de ser \"e\", \"i\", \"g\" ou \"y\""
 
 #: elfxx-riscv.c:1600
 #, c-format

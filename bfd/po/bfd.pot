@@ -5824,7 +5824,7 @@ msgstr ""
 
 #: elfxx-riscv.c:1769
 #, c-format
-msgid "%s: first ISA extension must be `e', `i' or `g'"
+msgid "%s: first ISA extension must be `e', `i', `g' or `y'"
 msgstr ""
 
 #: elfxx-riscv.c:1793

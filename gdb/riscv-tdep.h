@@ -144,6 +144,9 @@ extern int riscv_isa_flen (struct gdbarch *gdbarch);
    CHERI-RV64.  */
 extern int riscv_isa_clen (struct gdbarch *gdbarch);
 
+/* Return true if GDBARCH is using the Y base capability instruction set.  */
+extern bool riscv_isa_y (struct gdbarch *gdbarch);
+
 /* Return the width in bytes of the general purpose register abi for
    GDBARCH.  This can be equal to, or less than RISCV_ISA_XLEN and reflects
    how the binary was compiled rather than the hardware that is available.

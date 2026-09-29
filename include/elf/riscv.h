@@ -118,6 +118,9 @@ END_RELOC_NUMBERS (R_RISCV_max)
 /* File uses the 32E base integer instruction.  */
 #define EF_RISCV_RVE 0x0008
 
+/* File uses the Y base capability instruction.  */
+#define EF_RISCV_RVY 0x0040
+
 /* File uses CheriABI.  */
 #define EF_RISCV_CHERIABI 0x00010000
 

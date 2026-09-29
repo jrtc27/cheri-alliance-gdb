@@ -5546,8 +5546,8 @@ msgstr "невозможно найти версии по умолчанию д�
 
 #: elfxx-riscv.c:1769
 #, c-format
-msgid "%s: first ISA extension must be `e', `i' or `g'"
-msgstr "%s: первое расширение ISA должно быть «e», «i» или «g»"
+msgid "%s: first ISA extension must be `e', `i', `g' or `y'"
+msgstr "%s: первое расширение ISA должно быть «e», «i», «g» или «y»"
 
 #: elfxx-riscv.c:1793
 #, c-format

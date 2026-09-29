@@ -47,13 +47,20 @@ riscv_create_target_description (const struct riscv_gdbarch_features features)
 
   if (features.xlen == 4)
     {
-      if (features.embedded)
+      if (features.y)
+	arch_name.append (":rv32y");
+      else if (features.embedded)
 	arch_name.append (":rv32e");
       else
 	arch_name.append (":rv32i");
     }
   else if (features.xlen == 8)
-    arch_name.append (":rv64i");
+    {
+      if (features.y)
+	arch_name.append (":rv64y");
+      else
+	arch_name.append (":rv64i");
+    }
   else if (features.xlen == 16)
     arch_name.append (":rv128i");
 
@@ -64,7 +71,7 @@ riscv_create_target_description (const struct riscv_gdbarch_features features)
   else if (features.flen == 16)
     arch_name.append ("q");
 
-  if (features.clen != 0)
+  if (features.clen != 0 && !features.y)
     {
       arch_name.append ("zcherihybrid");
       arch_name.append ("zcheripurecap");

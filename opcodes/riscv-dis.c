@@ -708,6 +708,10 @@ print_insn_args (const char *oparg, insn_t l, bfd_vma pc, disassemble_info *info
 		  print (info->stream, dis_style_immediate, "%d",
 			 (int) EXTRACT_ZCHERI_CBNDS_UIMM(l));
 		  break;
+		case 'B': /* Unsigned immediate (bounds), ybndswi insn. */
+		  print (info->stream, dis_style_immediate, "%d",
+			 (int) EXTRACT_YBNDSWI_UIMM (l));
+		  break;
 		default:
 		  goto undefined_modifier;
 		}
@@ -853,6 +857,13 @@ riscv_disassemble_insn (bfd_vma memaddr,
       else
 	riscv_fpr_names = riscv_gpr_names == riscv_gpr_names_abi ?
 			  riscv_fpr_names_abi : riscv_fpr_names_numeric;
+
+      /* If arch has the Y extension, replace GPCR with GPR.  */
+      if (riscv_subset_supports (&riscv_rps_dis, "y"))
+	riscv_gpcr_names = riscv_gpr_names;
+      else
+	riscv_gpcr_names = riscv_gpr_names == riscv_gpr_names_abi ?
+			   riscv_gpcr_names_abi : riscv_gpcr_names_numeric;
 
       for (; op->name; op++)
 	{
@@ -1309,7 +1320,7 @@ riscv_get_disassembler (bfd *abfd)
 	  default_arch = attr[Tag_RISCV_arch].s;
 	}
 
-      if (elf_elfheader (abfd)->e_flags & EF_RISCV_CAPMODE)
+      if (elf_elfheader (abfd)->e_flags & (EF_RISCV_CAPMODE | EF_RISCV_RVY))
 	capmode = true;
     }
 

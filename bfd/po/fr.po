@@ -5563,8 +5563,8 @@ msgstr "impossible de trouver les versions par défaut de l'extension ISA « %s
 
 #: elfxx-riscv.c:1769
 #, c-format
-msgid "%s: first ISA extension must be `e', `i' or `g'"
-msgstr "%s: la première extension ISA doit être « e », « i » ou « g »"
+msgid "%s: first ISA extension must be `e', `i', `g' or `y'"
+msgstr "%s: la première extension ISA doit être « e », « i », « g » ou « y »"
 
 #: elfxx-riscv.c:1793
 #, c-format

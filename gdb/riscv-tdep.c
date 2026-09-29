@@ -923,6 +923,15 @@ riscv_abi_clen (struct gdbarch *gdbarch)
   return tdep->abi_features.clen;
 }
 
+/* See riscv-tdep.h.  */
+
+bool
+riscv_isa_y (struct gdbarch *gdbarch)
+{
+  riscv_gdbarch_tdep *tdep = gdbarch_tdep<riscv_gdbarch_tdep> (gdbarch);
+  return tdep->isa_features.y;
+}
+
 /* Return true if the target for GDBARCH has floating point hardware.  */
 
 static bool
@@ -4049,7 +4058,10 @@ riscv_features_from_bfd (const bfd *abfd)
       else if (e_flags & EF_RISCV_FLOAT_ABI_SINGLE)
 	features.flen = 4;
 
-      if (e_flags & EF_RISCV_CHERIABI)
+      if (e_flags & EF_RISCV_RVY)
+	features.y = true;
+
+      if ((e_flags & EF_RISCV_CHERIABI) || features.y)
 	features.clen = features.xlen * 2;
 
       if (e_flags & EF_RISCV_RVE)
@@ -4510,6 +4522,7 @@ riscv_gcc_target_options (struct gdbarch *gdbarch)
   int isa_xlen = riscv_isa_xlen (gdbarch);
   int isa_flen = riscv_isa_flen (gdbarch);
   int isa_clen = riscv_isa_clen (gdbarch);
+  bool isa_y = riscv_isa_y (gdbarch);
   int abi_xlen = riscv_abi_xlen (gdbarch);
   int abi_flen = riscv_abi_flen (gdbarch);
   int abi_clen = riscv_abi_clen (gdbarch);
@@ -4520,13 +4533,25 @@ riscv_gcc_target_options (struct gdbarch *gdbarch)
     target_options += "64";
   else
     target_options += "32";
-  if (isa_flen == 8)
-    target_options += "gc";
-  else if (isa_flen == 4)
-    target_options += "imafc";
+  if (isa_y)
+    {
+      target_options += "yma";
+      if (isa_flen == 4 || isa_flen == 8)
+	target_options += "f";
+      if (isa_flen == 8)
+	target_options += "d";
+      target_options += "c";
+    }
   else
-    target_options += "imac";
-  if (isa_clen != 0)
+    {
+      if (isa_flen == 8)
+	target_options += "gc";
+      else if (isa_flen == 4)
+	target_options += "imafc";
+      else
+	target_options += "imac";
+    }
+  if (isa_clen != 0 && !isa_y)
     {
       target_options += "zcherihybrid";
       target_options += "zcheripurecap";
@@ -4731,6 +4756,9 @@ riscv_gdbarch_init (struct gdbarch_info info,
      hardware features as defining the abi.  */
   if (abi_features.xlen == 0)
     abi_features = features;
+
+  if (abi_features.y)
+    features.y = true;
 
   /* In theory a binary compiled for RV32 could run on an RV64 target,
      however, this has not been tested in GDB yet, so for now we require

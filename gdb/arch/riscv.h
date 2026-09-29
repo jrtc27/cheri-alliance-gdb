@@ -62,6 +62,9 @@ struct riscv_gdbarch_features
   /* When true this target is RV32E.  */
   bool embedded = false;
 
+  /* When true this target is RVY.  */
+  bool y = false;
+
   /* Track if the target description has an fcsr, fflags, and frm
      registers.  Some targets provide all these in their target
      descriptions, while some only offer fcsr, while others don't even
